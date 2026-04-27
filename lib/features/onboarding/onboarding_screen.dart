@@ -1,12 +1,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/home/home_screen.dart';
+import 'package:mind_map/components/text_field_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/arrow_button_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/goals_example_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/main_info_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/painter/curved_painter_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/top_info_bar_widget.dart';
+import 'package:mind_map/features/sign_in/sign_in_screen.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-              const HomeScreen(),
+              const SignInScreen(),
           transitionsBuilder: (context, animation, secondaryAnimation, child) =>
               FadeTransition(opacity: animation, child: child),
         ),
@@ -231,46 +232,15 @@ class _SecondOnboardingLayerState extends State<_SecondOnboardingLayer> {
 
                       const SizedBox(height: 80),
 
+                      const Text(
+                        'Write your own ones:',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      const SizedBox(height: 8),
+
                       /// INPUT
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Write your own ones:',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(height: 8),
-                          SizedBox(
-                            height: 55,
-                            child: Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                color: Theme.of(
-                                  context,
-                                ).primaryColor.withValues(alpha: 0.3),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: TextFormField(
-                                controller: _userOwnOneGoalController,
-                                cursorColor: Theme.of(
-                                  context,
-                                ).colorScheme.tertiary,
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.tertiary,
-                                  fontSize: 16,
-                                ),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Theme.of(context).primaryColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                    borderSide: BorderSide.none,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                      TextFieldWidget(
+                        userController: _userOwnOneGoalController,
                       ),
 
                       const SizedBox(height: 60),
