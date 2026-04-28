@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind_map/features/home/widgets/top_right_btn_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,14 +43,16 @@ class _TopWidget extends StatelessWidget {
               left: -50,
               child: CircleAvatar(
                 radius: 140,
-                backgroundColor: Color(0xFFAD3743).withValues(alpha: 0.3),
+                backgroundColor: Color(0xFFAD3743).withValues(alpha: 0.7),
               ),
             ),
 
             Padding(
               padding: const EdgeInsets.fromLTRB(26.0, 50.0, 20.0, 0.0),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  ///LEFT COLUMN
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -93,6 +96,25 @@ class _TopWidget extends StatelessWidget {
                             ],
                           ),
                         ),
+                      ),
+                    ],
+                  ),
+
+                  ///RIGHT COLUMN
+                  Column(
+                    spacing: 20,
+                    children: [
+                      TopRightBtnWidget(
+                        onTap: () {
+                          ///TODO: Implement notification logic
+                        },
+                        icon: Icons.notifications_outlined,
+                      ),
+                      TopRightBtnWidget(
+                        onTap: () {
+                          ///TODO: Implement edit logic
+                        },
+                        icon: Icons.edit_outlined,
                       ),
                     ],
                   ),
