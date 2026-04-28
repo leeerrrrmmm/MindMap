@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/onboarding/onboarding_screen.dart';
+import 'package:mind_map/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
 
 class SplashScreen extends StatefulWidget {

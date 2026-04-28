@@ -7,7 +7,7 @@ import 'package:mind_map/features/onboarding/widgets/goals_example_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/main_info_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/painter/curved_painter_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/top_info_bar_widget.dart';
-import 'package:mind_map/features/sign_in/sign_in_screen.dart';
+import 'package:mind_map/features/sign_in/presentation/sign_in_screen.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
 
 class OnboardingScreen extends StatefulWidget {

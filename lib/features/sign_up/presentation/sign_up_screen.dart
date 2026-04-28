@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mind_map/components/login_with_another_way_widget.dart';
 import 'package:mind_map/components/sign_btn_widget.dart';
 import 'package:mind_map/components/text_field_widget.dart';
-import 'package:mind_map/features/sign_in/sign_in_screen.dart';
+import 'package:mind_map/features/sign_in/presentation/sign_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
