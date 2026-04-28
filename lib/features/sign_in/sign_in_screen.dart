@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mind_map/components/login_with_another_way_widget.dart';
+import 'package:mind_map/components/sign_btn_widget.dart';
 import 'package:mind_map/components/text_field_widget.dart';
 import 'package:mind_map/features/forgot_password/forgot_password_screen.dart';
 import 'package:mind_map/features/sign_up/sign_up_screen.dart';
@@ -181,32 +182,11 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
 
                   ///SIGN IN BUTTON
-                  Container(
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 10,
-                      children: [
-                        Text(
-                          'Sign in',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Icon(
-                          Icons.login_outlined,
-                          color: Theme.of(context).primaryColor,
-                          size: 26,
-                        ),
-                      ],
-                    ),
+                  SignBtnWidget(
+                    onTap: () {
+                      //TODO: Implement sign in logic
+                    },
+                    label: 'Sign in',
                   ),
 
                   const SizedBox(height: 20),

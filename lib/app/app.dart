@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/sign_up/sign_up_screen.dart';
+import 'package:mind_map/features/home/home_screen.dart';
 import 'package:mind_map/theme/app_theme.dart';
 
 class App extends StatelessWidget {
@@ -9,7 +9,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const SignUpScreen(),
+      home: const HomeScreen(),
       theme: AppThemeData.light,
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mind_map/components/login_with_another_way_widget.dart';
+import 'package:mind_map/components/sign_btn_widget.dart';
 import 'package:mind_map/components/text_field_widget.dart';
 import 'package:mind_map/features/sign_in/sign_in_screen.dart';
 
@@ -169,36 +170,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
 
-                  ///SIGN IN BUTTON
-                  Container(
-                    margin: const EdgeInsets.only(top: 20.0),
-                    width: double.infinity,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      spacing: 10,
-                      children: [
-                        Text(
-                          'Sign up',
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Icon(
-                          Icons.login_outlined,
-                          color: Theme.of(context).primaryColor,
-                          size: 26,
-                        ),
-                      ],
-                    ),
+                  ///SIGN UP BUTTON
+                  SignBtnWidget(
+                    onTap: () {
+                      //TODO: Implement sign up logic
+                    },
+                    label: 'Sign up',
                   ),
-
                   const SizedBox(height: 4),
 
                   ///LOGIN WITH ANOTHER WAY
