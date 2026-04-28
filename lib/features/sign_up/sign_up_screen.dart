@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mind_map/components/login_with_another_way_widget.dart';
 import 'package:mind_map/components/text_field_widget.dart';
-import 'package:mind_map/features/forgot_password/forgot_password_screen.dart';
-import 'package:mind_map/features/sign_up/sign_up_screen.dart';
+import 'package:mind_map/features/sign_in/sign_in_screen.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,67 +60,46 @@ class _SignInScreenState extends State<SignInScreen> {
                 clipper: _BottomContainerClipper(),
                 child: Container(
                   width: double.infinity,
-                  height: 295,
+                  height: 205,
                   decoration: BoxDecoration(
                     color: Color(0xFFAD3743).withValues(alpha: 0.3),
                   ),
                   child: Center(
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 80.0),
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          children: [
+                            TextSpan(text: "Already have an account?"),
+                            TextSpan(
+                              text: ' Sign In',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.secondary,
+                                decoration: TextDecoration.underline,
+                              ),
+
+                              ///Navigate to Sign Up Screen
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder:
+                                          (
+                                            context,
+                                            animation,
+                                            secondaryAnimation,
+                                          ) => const SignInScreen(),
+                                    ),
+                                  );
+                                },
+                            ),
+                          ],
                         ),
-                        children: [
-                          TextSpan(text: "Don't have an account?"),
-                          TextSpan(
-                            text: ' Sign up',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              decoration: TextDecoration.underline,
-                            ),
-
-                            ///Navigate to Sign Up Screen
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (
-                                          context,
-                                          animation,
-                                          secondaryAnimation,
-                                        ) => const SignUpScreen(),
-                                  ),
-                                );
-                              },
-                          ),
-
-                          ///Navigate to Forgot Password Screen
-                          TextSpan(
-                            text: '\n\nForgot password?',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.secondary,
-                              decoration: TextDecoration.underline,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder:
-                                        (
-                                          context,
-                                          animation,
-                                          secondaryAnimation,
-                                        ) => const ForgotPasswordScreen(),
-                                  ),
-                                );
-                              },
-                          ),
-                        ],
                       ),
                     ),
                   ),
@@ -156,7 +136,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   //TextFieldForm for email and password
                   Column(
                     spacing: 10,
@@ -177,11 +157,21 @@ class _SignInScreenState extends State<SignInScreen> {
                         isPassword: true,
                         suffixIcon: Icons.visibility_off_outlined,
                       ),
+                      //! тре додади валідацію для пароля
+                      _EmailAndPasswWidget(
+                        controller: confirmPasswordController,
+                        title: 'Confirm Password',
+                        prefixIcon: Icons.lock_outline,
+                        hintText: 'Confirm your password...',
+                        isPassword: true,
+                        suffixIcon: Icons.visibility_off_outlined,
+                      ),
                     ],
                   ),
 
                   ///SIGN IN BUTTON
                   Container(
+                    margin: const EdgeInsets.only(top: 20.0),
                     width: double.infinity,
                     height: 60,
                     decoration: BoxDecoration(
@@ -193,7 +183,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       spacing: 10,
                       children: [
                         Text(
-                          'Sign in',
+                          'Sign up',
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 20,
@@ -209,7 +199,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 4),
 
                   ///LOGIN WITH ANOTHER WAY
                   Row(
