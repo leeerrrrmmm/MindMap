@@ -10,7 +10,7 @@ class CustomBottomNavBar extends StatelessWidget {
     required this.onTap,
   });
 
-  // Список иконок (должен совпадать по количеству с _pages в MainScreen)
+  // Список иконок
   final List<IconData> icons = const [
     Icons.home_filled,
     Icons.notifications,

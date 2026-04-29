@@ -14,7 +14,7 @@ class _NavigationState extends State<Navigation> {
 
   // Список страниц
   final List<Widget> _pages = [
-    const HomeScreen(), // Тот самый HomeScreen с TopWidget
+    const HomeScreen(),
     const Scaffold(body: Center(child: Text('Notifications'))),
     const Scaffold(body: Center(child: Text('Profile'))),
     const Scaffold(body: Center(child: Text('Settings'))),
@@ -23,13 +23,12 @@ class _NavigationState extends State<Navigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Используем Stack, чтобы навигация была ПОВЕРХ контента
       body: Stack(
         children: [
           // 1. Контент страницы
           IndexedStack(index: _currentIndex, children: _pages),
 
-          // 2. Наша кастомная панель навигации
+          // 2. Кастомная панель навигации
           Positioned(
             bottom: 30,
             left: 0,
