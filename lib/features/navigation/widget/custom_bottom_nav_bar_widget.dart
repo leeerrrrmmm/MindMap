@@ -21,7 +21,7 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 34),
       height: 58,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
@@ -67,12 +67,15 @@ class _NavItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: isActive
-              ? Colors.white.withValues(alpha: 0.2)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(12),
+          color: isActive ? Colors.white : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
         ),
-        child: Icon(icon, color: Colors.white),
+        child: Icon(
+          icon,
+          color: isActive
+              ? Theme.of(context).scaffoldBackgroundColor
+              : Colors.white,
+        ),
       ),
     );
   }

@@ -30,7 +30,7 @@ class _NavigationState extends State<Navigation> {
 
           // 2. Кастомная панель навигации
           Positioned(
-            bottom: 30,
+            bottom: 20,
             left: 0,
             right: 0,
             child: CustomBottomNavBar(
