@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/navigation/navigation.dart';
+import 'package:mind_map/navigation/navigation.dart';
 import 'package:mind_map/theme/app_theme.dart';
 
 class App extends StatelessWidget {

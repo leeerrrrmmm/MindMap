@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mind_map/features/add_task/presentation/add_task_screen.dart';
 import 'package:mind_map/features/home/presentation/home_screen.dart';
-import 'package:mind_map/features/navigation/widget/custom_bottom_nav_bar_widget.dart';
+import 'package:mind_map/navigation/widget/custom_bottom_nav_bar_widget.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -15,8 +16,9 @@ class _NavigationState extends State<Navigation> {
   // Список страниц
   final List<Widget> _pages = [
     const HomeScreen(),
-    const Scaffold(body: Center(child: Text('Notifications'))),
-    const Scaffold(body: Center(child: Text('Profile'))),
+    const Scaffold(body: Center(child: Text(' Map Screen '))),
+    const AddTaskScreen(),
+    const Scaffold(body: Center(child: Text('Task Screen'))),
     const Scaffold(body: Center(child: Text('Settings'))),
   ];
 

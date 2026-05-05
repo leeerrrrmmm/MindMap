@@ -13,8 +13,9 @@ class CustomBottomNavBar extends StatelessWidget {
   // Список иконок
   final List<IconData> icons = const [
     Icons.home_filled,
-    Icons.notifications,
-    Icons.person,
+    Icons.hub_rounded,
+    Icons.add,
+    Icons.task,
     Icons.settings,
   ];
 
@@ -22,7 +23,7 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 34),
-      height: 58,
+      height: 60,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(20),

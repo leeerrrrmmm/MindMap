@@ -24,7 +24,7 @@ class AppThemeData {
     textTheme: TextTheme(
       bodyLarge: TextStyle(
         color: AppTheme.textColor,
-        fontSize: 32,
+        fontSize: 14,
         fontWeight: FontWeight.bold,
       ),
       bodyMedium: TextStyle(
