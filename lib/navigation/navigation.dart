@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mind_map/features/add_task/presentation/add_task_screen.dart';
 import 'package:mind_map/features/home/presentation/home_screen.dart';
+import 'package:mind_map/features/settings/settings_screen.dart';
 import 'package:mind_map/navigation/widget/custom_bottom_nav_bar_widget.dart';
 
 class Navigation extends StatefulWidget {
@@ -19,7 +20,7 @@ class _NavigationState extends State<Navigation> {
     const Scaffold(body: Center(child: Text(' Map Screen '))),
     const AddTaskScreen(),
     const Scaffold(body: Center(child: Text('Task Screen'))),
-    const Scaffold(body: Center(child: Text('Settings'))),
+    const SettingsScreen(),
   ];
 
   @override
