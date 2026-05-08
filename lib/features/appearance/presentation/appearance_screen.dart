@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mind_map/features/appearance/widgets/appearance_selector_widget.dart';
+import 'package:mind_map/features/appearance/widgets/custom_theme_switcher_widget.dart';
 import 'package:mind_map/features/appearance/widgets/size_selector_widget.dart';
 
 enum AppearanceTheme {
@@ -34,6 +35,7 @@ class AppearanceScreen extends StatefulWidget {
 class _AppearanceScreenState extends State<AppearanceScreen> {
   AppearanceTheme selectedAppearanceTheme = AppearanceTheme.one;
   FontSize selectedFontSize = FontSize.defaultSize;
+  bool _isDark = false;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +52,10 @@ class _AppearanceScreenState extends State<AppearanceScreen> {
       body: Stack(
         children: [
           SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 20,
                 children: [
                   AppearanceSelectorWidget(
                     selectedAppearanceTheme: selectedAppearanceTheme,
@@ -64,6 +65,9 @@ class _AppearanceScreenState extends State<AppearanceScreen> {
                       });
                     },
                   ),
+
+                  const SizedBox(height: 20),
+
                   _FontSizeSelector(
                     selectedFontSize: selectedFontSize,
                     onSelect: (size) {
@@ -72,20 +76,179 @@ class _AppearanceScreenState extends State<AppearanceScreen> {
                       });
                     },
                   ),
+
+                  const SizedBox(height: 20),
+
+                  _CustomThemeDragWisget(
+                    isDark: _isDark,
+                    onChanged: (newValue) {
+                      setState(() {
+                        _isDark = newValue;
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
           ),
-          _BottomCircle(),
+          _SaveAndExitButton(
+            onTap: () {
+              //!TODO: Implement save and exit functionality
+            },
+          ),
+          const _BottomCircle(),
         ],
       ),
     );
   }
 }
 
+class _SaveAndExitButton extends StatelessWidget {
+  final VoidCallback onTap;
+  const _SaveAndExitButton({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 30, left: 20, right: 20),
+          height: 65,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.secondary,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: 10,
+            children: [
+              Text(
+                'Save and exit',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              Icon(Icons.login_outlined, color: Theme.of(context).primaryColor),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CustomThemeDragWisget extends StatefulWidget {
+  final bool isDark;
+  final ValueChanged<bool> onChanged;
+
+  const _CustomThemeDragWisget({required this.isDark, required this.onChanged});
+
+  @override
+  State<_CustomThemeDragWisget> createState() => _CustomThemeDragWisgetState();
+}
+
+class _CustomThemeDragWisgetState extends State<_CustomThemeDragWisget>
+    with SingleTickerProviderStateMixin {
+  late bool _isDark;
+  double _dragX = 0;
+  late AnimationController _rotationController;
+
+  final double containerWidth = 113;
+  final double containerHeight = 66;
+  final double thumbSize = 52;
+
+  bool _initialized = false;
+
+  double get _padding => _isDark ? 7 : 7;
+
+  double get _maxDrag => containerWidth - containerHeight - (_padding * 0.5);
+
+  @override
+  void initState() {
+    super.initState();
+
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (_initialized) return;
+
+    _isDark = Theme.of(context).brightness == Brightness.dark;
+    _dragX = _isDark ? _maxDrag : 0;
+
+    _initialized = true;
+  }
+
+  void _onDragUpdate(DragUpdateDetails details) {
+    setState(() {
+      _dragX = (_dragX + details.delta.dx).clamp(0, _maxDrag);
+    });
+
+    _rotationController.forward(from: 0);
+  }
+
+  void _onDragEnd(DragEndDetails details) {
+    final bool newValue = _dragX > _maxDrag * 0.5;
+
+    setState(() {
+      _isDark = newValue;
+      _dragX = newValue ? _maxDrag : 0;
+      _rotationController.reverse(from: 1);
+    });
+
+    widget.onChanged(newValue);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          'Theme',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).scaffoldBackgroundColor,
+          ),
+        ),
+
+        CustomThemeSwitcherWidget(
+          dragX: _dragX,
+          maxDrag: _maxDrag,
+          switchWidth: containerWidth,
+          switchHeight: containerHeight,
+          padding: _padding,
+          thumbSize: thumbSize,
+          rotationController: _rotationController,
+          onDragUpdate: _onDragUpdate,
+          onDragEnd: _onDragEnd,
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _rotationController.dispose();
+    super.dispose();
+  }
+}
+
 class _FontSizeSelector extends StatelessWidget {
   final FontSize selectedFontSize;
   final ValueChanged<FontSize> onSelect;
+
   const _FontSizeSelector({
     required this.selectedFontSize,
     required this.onSelect,
@@ -95,7 +258,6 @@ class _FontSizeSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 10,
       children: [
         Text(
           'Font Size',
@@ -105,24 +267,23 @@ class _FontSizeSelector extends StatelessWidget {
             color: Theme.of(context).scaffoldBackgroundColor,
           ),
         ),
+
+        const SizedBox(height: 10),
+
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Column(
-            children: [
-              Row(
-                spacing: 20,
-                children: [
-                  ...List.generate(
-                    3,
-                    (index) => SizeSelectorWidget(
-                      fontSize: FontSize.values[index],
-                      onSelect: onSelect,
-                      selectedFontSize: selectedFontSize,
-                    ),
-                  ),
-                ],
+          child: Row(
+            children: List.generate(
+              3,
+              (index) => Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: SizeSelectorWidget(
+                  fontSize: FontSize.values[index],
+                  onSelect: onSelect,
+                  selectedFontSize: selectedFontSize,
+                ),
               ),
-            ],
+            ),
           ),
         ),
       ],
@@ -141,10 +302,10 @@ class _BottomCircle extends StatelessWidget {
         height: 200,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color(0xFF000000).withValues(alpha: 0.1),
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(200),
+          color: Colors.black.withValues(alpha: 0.1),
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(200),
+            topRight: Radius.circular(200),
           ),
         ),
       ),
