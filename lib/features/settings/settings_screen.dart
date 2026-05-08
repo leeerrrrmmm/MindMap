@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mind_map/features/account/presentation/account_screen.dart';
+import 'package:mind_map/features/appearance/presentation/appearance_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -45,7 +46,12 @@ class SettingsScreen extends StatelessWidget {
                   icon: CupertinoIcons.paintbrush_fill,
                   label: 'Appearance',
                   onTap: () {
-                    //TODO: Implemet navigation to appearance screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AppearanceScreen(),
+                      ),
+                    );
                   },
                 ),
               ],
