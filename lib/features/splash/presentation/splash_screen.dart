@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mind_map/navigation/app_router.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,18 +24,8 @@ class _SplashScreenState extends State<SplashScreen> {
         Future.delayed(const Duration(seconds: 4), () {
           if (!mounted) {
             return;
-          } else {
-            Navigator.pushReplacement(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                    const OnboardingScreen(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) =>
-                        FadeTransition(opacity: animation, child: child),
-              ),
-            );
           }
+          context.go(AppRoutes.onboarding);
         }),
       },
     );

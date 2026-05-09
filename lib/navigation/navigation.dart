@@ -28,10 +28,10 @@ class _NavigationState extends State<Navigation> {
     return Scaffold(
       body: Stack(
         children: [
-          // 1. Контент страницы
+          // Контент страницы
           IndexedStack(index: _currentIndex, children: _pages),
 
-          // 2. Кастомная панель навигации
+          // Кастомная панель навигации
           Positioned(
             bottom: 20,
             left: 0,

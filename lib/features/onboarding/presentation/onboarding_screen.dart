@@ -1,14 +1,15 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mind_map/components/text_field_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/arrow_button_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/goals_example_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/main_info_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/painter/curved_painter_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/top_info_bar_widget.dart';
-import 'package:mind_map/features/sign_in/presentation/sign_in_screen.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
+import 'package:mind_map/navigation/app_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -26,15 +27,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         currentLayerIndex++;
       });
     } else {
-      Navigator.pushReplacement(
-        context,
-        PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const SignInScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) =>
-              FadeTransition(opacity: animation, child: child),
-        ),
-      );
+      context.go(AppRoutes.signIn);
     }
   }
 

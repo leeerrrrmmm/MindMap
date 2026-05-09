@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/account/presentation/account_screen.dart';
-import 'package:mind_map/features/appearance/presentation/appearance_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mind_map/navigation/app_router.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -34,24 +34,14 @@ class SettingsScreen extends StatelessWidget {
                   icon: Icons.person,
                   label: 'Account',
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AccountScreen(),
-                      ),
-                    );
+                    context.push(AppRoutes.account);
                   },
                 ),
                 _SettingsActionWidget(
                   icon: CupertinoIcons.paintbrush_fill,
                   label: 'Appearance',
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AppearanceScreen(),
-                      ),
-                    );
+                    context.push(AppRoutes.appearance);
                   },
                 ),
               ],
