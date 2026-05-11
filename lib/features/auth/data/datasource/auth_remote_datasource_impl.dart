@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mind_map/features/auth/data/datasource/auth_repote_datasource.dart';
+import 'package:mind_map/features/auth/data/datasource/auth_remote_datasource.dart';
 import 'package:mind_map/features/auth/data/datasource/user_remote_datasource.dart';
 import 'package:mind_map/features/auth/data/model/user_model.dart';
 import 'package:uuid/uuid.dart';

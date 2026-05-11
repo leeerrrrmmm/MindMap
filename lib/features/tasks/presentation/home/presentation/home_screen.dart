@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/home/widgets/down_block_container_widget.dart';
-import 'package:mind_map/features/home/widgets/mind_map_bloc.dart';
-import 'package:mind_map/features/home/widgets/quick_thougt_container_widget.dart';
-import 'package:mind_map/features/home/widgets/top_right_btn_widget.dart';
+import 'package:mind_map/features/tasks/presentation/home/widgets/down_block_container_widget.dart';
+import 'package:mind_map/features/tasks/presentation/home/widgets/mind_map_bloc.dart';
+import 'package:mind_map/features/tasks/presentation/home/widgets/quick_thougt_container_widget.dart';
+import 'package:mind_map/features/tasks/presentation/home/widgets/top_right_btn_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mind_map/features/add_task/presentation/add_task_screen.dart';
-import 'package:mind_map/features/home/presentation/home_screen.dart';
+import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
+import 'package:mind_map/features/tasks/presentation/home/presentation/home_screen.dart';
 import 'package:mind_map/features/settings/settings_screen.dart';
 import 'package:mind_map/navigation/widget/custom_bottom_nav_bar_widget.dart';
 

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-
-enum Sphere { work, health, ideas, personal, finance, learning, other }
+import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
+import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
+import 'package:mind_map/navigation/app_router.dart';
+import 'package:uuid/uuid.dart';
 
 enum SphereColor {
   work(Color(0xFFD96A78)),
@@ -59,6 +63,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).primaryColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -66,57 +71,120 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         centerTitle: true,
         title: Image.asset('assets/images/red_logo.png'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 20,
-          children: [
-            const SizedBox(),
-            Text(
-              'Create new Task:',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).scaffoldBackgroundColor,
-              ),
-            ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 20,
+              children: [
+                const SizedBox(),
+                Text(
+                  'Create new Task:',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                ),
 
-            _WriteYourNameTaskWidget(taskController: _taskController),
+                _WriteYourNameTaskWidget(taskController: _taskController),
 
-            _SelectASphereWidget(
-              selectedSphere: _selectedSphere,
-              onSelect: (sphere) {
-                setState(() => _selectedSphere = sphere);
-              },
-            ),
+                _SelectASphereWidget(
+                  selectedSphere: _selectedSphere,
+                  onSelect: (sphere) {
+                    setState(() => _selectedSphere = sphere);
+                  },
+                ),
 
-            _SelectDeadLine(
-              selectedDate: _selectedDate,
-              onTap: _selectDeadLine,
-            ),
+                _SelectDeadLine(
+                  selectedDate: _selectedDate,
+                  onTap: _selectDeadLine,
+                ),
 
-            _IsPrivateTaskWidget(
-              isPrivate: _isPrivate,
-              onChanged: (value) {
-                setState(() => _isPrivate = value ?? false);
-              },
+                _IsPrivateTaskWidget(
+                  isPrivate: _isPrivate,
+                  onChanged: (value) {
+                    setState(() => _isPrivate = value ?? false);
+                  },
+                ),
+                BlocConsumer<TaskCubit, TaskState>(
+                  listener: (context, state) {
+                    if (state is TaskLoaded) {
+                      context.go(AppRoutes.main);
+                    }
+
+                    if (state is TaskError) {
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text(state.message)));
+                    }
+                  },
+
+                  builder: (context, state) {
+                    final isLoading = state is TaskLoading;
+
+                    return AddTaskButton(
+                      onTap: isLoading
+                          ? () {}
+                          : () {
+                              final taskTitle = _taskController.text.trim();
+                              final taskSphere = _selectedSphere;
+                              final taskDeadline = _selectedDate;
+                              final taskIsPrivate = _isPrivate;
+
+                              if (taskTitle.isEmpty || taskDeadline == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Please fill all fields'),
+                                  ),
+                                );
+                                return;
+                              }
+
+                              context.read<TaskCubit>().addTask(
+                                TaskEntity(
+                                  id: const Uuid().v4(),
+                                  title: taskTitle,
+                                  sphere: taskSphere ?? Sphere.other,
+                                  deadline: taskDeadline,
+                                  isPrivate: taskIsPrivate,
+                                  isCompleted: false,
+                                  createdAt: DateTime.now(),
+                                ),
+                              );
+
+                              _taskController.clear();
+                              _selectedDate = null;
+                              _selectedSphere = null;
+                              _isPrivate = false;
+                              setState(() {});
+                            },
+                      label: isLoading ? 'Loading...' : 'Add new task',
+                    );
+                  },
+                ),
+              ],
             ),
-            AddTaskButton(
-              onTap: () {
-                //TODO: implement add task logic
-              },
-            ),
-          ],
+          ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _taskController.dispose();
+    super.dispose();
   }
 }
 
 class AddTaskButton extends StatelessWidget {
   final VoidCallback onTap;
-  const AddTaskButton({required this.onTap, super.key});
+  final String label;
+  const AddTaskButton({required this.onTap, required this.label, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +203,7 @@ class AddTaskButton extends StatelessWidget {
             spacing: 10,
             children: [
               Text(
-                'Add new task',
+                label,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
