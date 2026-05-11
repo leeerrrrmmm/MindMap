@@ -20,7 +20,7 @@ class UserModel extends UserEntity {
     User user, {
     required String customId,
     String? goal,
-    int mood = 0,
+    int? mood,
     String? firstName,
     String? lastName,
     String? imageUrl,
@@ -29,10 +29,10 @@ class UserModel extends UserEntity {
       uid: user.uid,
       customId: customId,
       email: user.email ?? '',
-      firstName: firstName,
-      lastName: lastName,
+      firstName: firstName ?? user.displayName,
+      lastName: lastName ?? user.displayName,
       goal: goal,
-      mood: mood,
+      mood: mood ?? 0,
       imageUrl: imageUrl ?? user.photoURL,
       createdAt: DateTime.now(),
     );

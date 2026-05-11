@@ -47,7 +47,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw Exception('User is null');
     }
 
-    final user = UserModel.fromFirebase(firebaseUser, customId: customId);
+    final user = UserModel.fromFirebase(
+      firebaseUser,
+      customId: customId,
+      goal: goal,
+      mood: mood,
+    );
 
     /// SAVE TO FIRESTORE
     await _userRemoteDataSource.createUser(user: user);
