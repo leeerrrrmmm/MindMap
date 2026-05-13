@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
 import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
@@ -9,6 +10,7 @@ import 'package:mind_map/features/tasks/presentation/home/widgets/down_block_con
 import 'package:mind_map/features/tasks/presentation/home/widgets/mind_map_bloc.dart';
 import 'package:mind_map/features/tasks/presentation/home/widgets/quick_thougt_container_widget.dart';
 import 'package:mind_map/features/tasks/presentation/home/widgets/top_right_btn_widget.dart';
+import 'package:mind_map/navigation/app_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -138,6 +140,7 @@ class _MainInfoWidget extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (state is TaskLoaded) {
+                  log('Task Loaded: ${state.tasks.length}');
                   final tasks = state.tasks;
                   final topTasks = topList(tasks);
                   final bottomTasks = bottomList(tasks);
@@ -217,7 +220,7 @@ class _MainInfoWidget extends StatelessWidget {
                     title: 'Private Tasks',
                     icon: Icons.lock,
                     onTap: () {
-                      ///TODO: Implement private tasks logic
+                      context.go(AppRoutes.private);
                     },
                   ),
                   DownBlockContainerWidget(
@@ -226,7 +229,7 @@ class _MainInfoWidget extends StatelessWidget {
                     title: 'Ideas for tasks',
                     icon: Icons.lightbulb,
                     onTap: () {
-                      ///TODO: Implement ideas for tasks logic
+                      context.go(AppRoutes.ideas);
                     },
                   ),
                 ],
@@ -234,7 +237,7 @@ class _MainInfoWidget extends StatelessWidget {
               MindMapBloc(
                 title: 'Mind Map',
                 onTap: () {
-                  ///TODO: Implement mind map logic
+                  context.push(AppRoutes.dashboard);
                 },
               ),
             ],

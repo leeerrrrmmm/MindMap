@@ -7,6 +7,9 @@ import 'package:mind_map/features/auth/presentation/sign_up/sign_up_screen.dart'
 import 'package:mind_map/features/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:mind_map/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:mind_map/features/splash/presentation/splash_screen.dart';
+import 'package:mind_map/features/tasks/presentation/dashboard/dashboard_screen.dart';
+import 'package:mind_map/features/tasks/presentation/idea/ideas_task_screen.dart';
+import 'package:mind_map/features/tasks/presentation/private/private_task_screen.dart';
 import 'package:mind_map/navigation/navigation.dart';
 
 abstract final class AppRoutes {
@@ -20,6 +23,9 @@ abstract final class AppRoutes {
   static const main = '/main';
   static const account = '/account';
   static const appearance = '/appearance';
+  static const private = '/private';
+  static const ideas = '/ideas';
+  static const dashboard = '/dashboard';
 }
 
 CustomTransitionPage<void> _fadePage(GoRouterState state, Widget child) {
@@ -68,6 +74,18 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.appearance,
       builder: (context, state) => const AppearanceScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.private,
+      builder: (context, state) => const PrivateTaskScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.ideas,
+      builder: (context, state) => const IdeasTaskScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.dashboard,
+      builder: (context, state) => const DashboardScreen(),
     ),
   ],
 );

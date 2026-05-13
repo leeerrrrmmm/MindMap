@@ -45,8 +45,11 @@ class TaskCubit extends Cubit<TaskState> {
 
       final tasks = await fetchTasksUsecase();
 
+      emit(TaskLoaded(tasks));
+
       return tasks.map((task) => TaskModel.fromEntity(task)).toList();
     } catch (e) {
+      emit(TaskError(e.toString()));
       throw Exception(e);
     }
   }
