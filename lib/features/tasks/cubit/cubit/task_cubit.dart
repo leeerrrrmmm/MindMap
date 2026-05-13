@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:mind_map/features/tasks/data/model/task_model.dart';
 import 'package:mind_map/features/tasks/domain/usecases/delete_task_usecase.dart';
 import 'package:mind_map/features/tasks/domain/usecases/fetch_task_by_id_usecase.dart';
 import 'package:mind_map/features/tasks/domain/usecases/fetch_task_usecase.dart';
@@ -38,15 +39,15 @@ class TaskCubit extends Cubit<TaskState> {
     }
   }
 
-  Future<void> loadTasks() async {
+  Future<List<TaskModel>> loadTasks() async {
     try {
       emit(TaskLoading());
 
       final tasks = await fetchTasksUsecase();
 
-      emit(TaskLoaded(tasks));
+      return tasks.map((task) => TaskModel.fromEntity(task)).toList();
     } catch (e) {
-      emit(TaskError(e.toString()));
+      throw Exception(e);
     }
   }
 
