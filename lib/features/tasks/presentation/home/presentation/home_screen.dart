@@ -220,7 +220,7 @@ class _MainInfoWidget extends StatelessWidget {
                     title: 'Private Tasks',
                     icon: Icons.lock,
                     onTap: () {
-                      context.go(AppRoutes.private);
+                      context.push(AppRoutes.private);
                     },
                   ),
                   DownBlockContainerWidget(
@@ -229,7 +229,7 @@ class _MainInfoWidget extends StatelessWidget {
                     title: 'Ideas for tasks',
                     icon: Icons.lightbulb,
                     onTap: () {
-                      context.go(AppRoutes.ideas);
+                      context.push(AppRoutes.ideas);
                     },
                   ),
                 ],
