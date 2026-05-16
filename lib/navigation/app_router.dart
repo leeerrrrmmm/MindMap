@@ -8,8 +8,8 @@ import 'package:mind_map/features/forgot_password/presentation/forgot_password_s
 import 'package:mind_map/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:mind_map/features/splash/presentation/splash_screen.dart';
 import 'package:mind_map/features/tasks/presentation/dashboard/dashboard_screen.dart';
-import 'package:mind_map/features/tasks/presentation/idea/ideas_task_screen.dart';
-import 'package:mind_map/features/tasks/presentation/private/private_task_screen.dart';
+import 'package:mind_map/features/tasks/presentation/idea/presentation/ideas_task_screen.dart';
+import 'package:mind_map/features/tasks/presentation/private/presentation/private_task_screen.dart';
 import 'package:mind_map/navigation/navigation.dart';
 
 abstract final class AppRoutes {
