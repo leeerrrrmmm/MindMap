@@ -226,7 +226,7 @@ class _MainInfoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Bloc for you',
+                'Block for you',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
