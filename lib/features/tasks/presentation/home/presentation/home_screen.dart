@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mind_map/features/auth/cubit/user_cubit/user_cubit.dart';
-import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
+import 'package:mind_map/features/tasks/cubit/task_cubit/task_cubit.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
 import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
 import 'package:mind_map/features/tasks/presentation/home/widgets/down_block_container_widget.dart';
@@ -259,7 +259,7 @@ class _MainInfoWidget extends StatelessWidget {
               MindMapBloc(
                 title: 'Mind Map',
                 onTap: () {
-                  context.push(AppRoutes.dashboard);
+                  context.push(AppRoutes.addMindMap);
                 },
               ),
             ],

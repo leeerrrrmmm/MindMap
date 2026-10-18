@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mind_map/features/tasks/data/datasource/task_remote_data_source.dart';
-import 'package:mind_map/features/tasks/data/model/task_model.dart';
+import 'package:mind_map/features/tasks/data/datasource/task/task_remote_data_source.dart';
+import 'package:mind_map/features/tasks/data/model/task_model/task_model.dart';
 
 class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   final FirebaseFirestore _firestore;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
+import 'package:mind_map/features/tasks/cubit/task_cubit/task_cubit.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
 import 'package:mind_map/features/tasks/presentation/private/extension/sphere_grouping_extension.dart';
 
@@ -10,14 +10,14 @@ class AllTasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Чистый белый фон, как на макетах
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(
           'All Tasks',
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Color(0xFFAD3743), // Твой фирменный красный
+            color: Color(0xFFAD3743),
           ),
         ),
         centerTitle: true,
@@ -66,7 +66,7 @@ class AllTasksScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Заголовок группы (как на макете "Self-improvement")
+                      // Заголовок группы
                       Text(
                         sphere.groupTitle,
                         style: const TextStyle(
@@ -100,7 +100,6 @@ class AllTasksScreen extends StatelessWidget {
   }
 }
 
-// Плашка, которая выглядит как часть дизайн-системы приложения
 class _AppStyleTaskChip extends StatelessWidget {
   const _AppStyleTaskChip({required this.task});
 
@@ -112,14 +111,11 @@ class _AppStyleTaskChip extends StatelessWidget {
     final textColor = task.sphere.textColor;
 
     return Container(
-      // Высота 44 (чуть больше 34 для комфортного текста в 2 строки)
       constraints: const BoxConstraints(minWidth: 100, maxWidth: 180),
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(
-          12.0,
-        ), // Скругление как у кнопок на макете
+        borderRadius: BorderRadius.circular(12.0),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

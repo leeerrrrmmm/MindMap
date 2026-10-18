@@ -7,8 +7,8 @@ import 'package:mind_map/features/auth/presentation/sign_up/sign_up_screen.dart'
 import 'package:mind_map/features/forgot_password/presentation/forgot_password_screen.dart';
 import 'package:mind_map/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:mind_map/features/splash/presentation/splash_screen.dart';
+import 'package:mind_map/features/tasks/presentation/add_mind_map/add_mind_map_screen.dart';
 import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
-import 'package:mind_map/features/tasks/presentation/dashboard/dashboard_screen.dart';
 import 'package:mind_map/features/tasks/presentation/idea/presentation/ideas_task_screen.dart';
 import 'package:mind_map/features/tasks/presentation/private/presentation/private_task_screen.dart';
 import 'package:mind_map/navigation/app_routes.dart';
@@ -70,8 +70,8 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const IdeasTaskScreen(),
     ),
     GoRoute(
-      path: AppRoutes.dashboard,
-      builder: (context, state) => const DashboardScreen(),
+      path: AppRoutes.addMindMap,
+      builder: (context, state) => const AddMindMapScreen(),
     ),
     GoRoute(
       path: AppRoutes.addTask,

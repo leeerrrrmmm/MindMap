@@ -1,5 +1,5 @@
-import 'package:mind_map/features/tasks/data/datasource/task_remote_data_source.dart';
-import 'package:mind_map/features/tasks/data/model/task_model.dart';
+import 'package:mind_map/features/tasks/data/datasource/task/task_remote_data_source.dart';
+import 'package:mind_map/features/tasks/data/model/task_model/task_model.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
 import 'package:mind_map/features/tasks/domain/repo/task_repository.dart';
 

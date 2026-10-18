@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
+import 'package:mind_map/features/tasks/cubit/task_cubit/task_cubit.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
 import 'package:mind_map/features/tasks/presentation/private/extension/sphere_grouping_extension.dart';
 import 'package:mind_map/features/tasks/presentation/private/widgets/empty_goals_state_widget.dart';

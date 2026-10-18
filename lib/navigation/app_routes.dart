@@ -11,6 +11,6 @@ abstract final class AppRoutes {
   static const appearance = '/appearance';
   static const private = '/private';
   static const ideas = '/ideas';
-  static const dashboard = '/dashboard';
+  static const addMindMap = '/add-mind-map';
   static const addTask = '/add-task';
 }

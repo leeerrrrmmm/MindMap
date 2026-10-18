@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:mind_map/features/tasks/data/model/task_model.dart';
-import 'package:mind_map/features/tasks/domain/usecases/delete_task_usecase.dart';
-import 'package:mind_map/features/tasks/domain/usecases/fetch_task_by_id_usecase.dart';
-import 'package:mind_map/features/tasks/domain/usecases/fetch_task_usecase.dart';
-import 'package:mind_map/features/tasks/domain/usecases/update_task_usecase.dart';
+import 'package:mind_map/features/tasks/data/model/task_model/task_model.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/delete_task_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/fetch_task_by_id_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/fetch_task_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/update_task_usecase.dart';
 
 import '../../domain/entity/task_entity.dart';
-import '../../domain/usecases/create_task_usecase.dart';
+import '../../domain/usecases/task/create_task_usecase.dart';
 
 part 'task_state.dart';
 

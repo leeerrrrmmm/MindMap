@@ -20,16 +20,25 @@ import 'package:mind_map/features/auth/domain/usecases/auth_usecases/sign_up_use
 import 'package:mind_map/features/auth/domain/usecases/user_usecases/delete_user_usecase.dart';
 import 'package:mind_map/features/auth/domain/usecases/user_usecases/get_current_user_usecase.dart';
 import 'package:mind_map/features/auth/domain/usecases/user_usecases/update_user_usecase.dart';
-import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
-import 'package:mind_map/features/tasks/data/datasource/task_remote_data_source.dart';
-import 'package:mind_map/features/tasks/data/datasource/task_remote_data_source_impl.dart';
+import 'package:mind_map/features/tasks/cubit/map_cubit/map_cubit.dart';
+import 'package:mind_map/features/tasks/cubit/task_cubit/task_cubit.dart';
+import 'package:mind_map/features/tasks/data/datasource/map/map_remote_data_source.dart';
+import 'package:mind_map/features/tasks/data/datasource/map/map_remote_data_source_impl.dart';
+import 'package:mind_map/features/tasks/data/datasource/task/task_remote_data_source.dart';
+import 'package:mind_map/features/tasks/data/datasource/task/task_remote_data_source_impl.dart';
+import 'package:mind_map/features/tasks/data/repo_impl/map_repository_impl.dart';
 import 'package:mind_map/features/tasks/data/repo_impl/task_repository_impl.dart';
+import 'package:mind_map/features/tasks/domain/repo/map_repo.dart';
 import 'package:mind_map/features/tasks/domain/repo/task_repository.dart';
-import 'package:mind_map/features/tasks/domain/usecases/create_task_usecase.dart';
-import 'package:mind_map/features/tasks/domain/usecases/delete_task_usecase.dart';
-import 'package:mind_map/features/tasks/domain/usecases/fetch_task_by_id_usecase.dart';
-import 'package:mind_map/features/tasks/domain/usecases/fetch_task_usecase.dart';
-import 'package:mind_map/features/tasks/domain/usecases/update_task_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/map/create_map_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/map/delete_map_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/map/fetch_maps_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/map/update_map_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/create_task_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/delete_task_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/fetch_task_by_id_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/fetch_task_usecase.dart';
+import 'package:mind_map/features/tasks/domain/usecases/task/update_task_usecase.dart';
 
 final sl = GetIt.instance;
 
@@ -120,6 +129,34 @@ Future<void> initDI() async {
       fetchTaskByIdUsecase: sl(),
       deleteTaskUsecase: sl(),
       updateTaskUsecase: sl(),
+    ),
+  );
+
+  //? ============================== TASK ==============================
+
+  //! DATASOURCES
+  sl.registerLazySingleton<MapRemoteDataSource>(
+    () => MapRemoteDataSourceImpl(sl(), sl()),
+  );
+
+  //! REPOSITORIES
+  sl.registerLazySingleton<MapRepo>(
+    () => MapRepositoryImpl(mapRemoteDataSource: sl()),
+  );
+
+  //! USE CASES
+  sl.registerLazySingleton(() => CreateMapUsecase(mapRepo: sl()));
+  sl.registerLazySingleton(() => FetchMapsUsecase(mapRepo: sl()));
+  sl.registerLazySingleton(() => DeleteMapUsecase(mapRepo: sl()));
+  sl.registerLazySingleton(() => UpdateMapUsecase(mapRepo: sl()));
+
+  //! CUBIT
+  sl.registerFactory(
+    () => MapCubit(
+      createMapUsecase: sl(),
+      fetchMapsUsecase: sl(),
+      deleteMapUsecase: sl(),
+      updateMapUsecase: sl(),
     ),
   );
 }

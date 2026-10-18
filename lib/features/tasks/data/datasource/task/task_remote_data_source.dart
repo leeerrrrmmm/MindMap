@@ -1,4 +1,4 @@
-import 'package:mind_map/features/tasks/data/model/task_model.dart';
+import 'package:mind_map/features/tasks/data/model/task_model/task_model.dart';
 
 abstract interface class TaskRemoteDataSource {
   Future<void> createTask({required TaskModel task});
