@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
-import 'package:mind_map/navigation/app_router.dart';
+import 'package:mind_map/navigation/app_routes.dart';
 import 'package:uuid/uuid.dart';
 
 enum SphereColor {

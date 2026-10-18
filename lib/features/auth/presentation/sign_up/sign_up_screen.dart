@@ -8,7 +8,7 @@ import 'package:mind_map/components/sign_btn_widget.dart';
 import 'package:mind_map/components/text_field_widget.dart';
 import 'package:mind_map/features/auth/cubit/auth_cubit/auth_cubit.dart';
 import 'package:mind_map/features/auth/cubit/user_cubit/user_cubit.dart';
-import 'package:mind_map/navigation/app_router.dart';
+import 'package:mind_map/navigation/app_routes.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});

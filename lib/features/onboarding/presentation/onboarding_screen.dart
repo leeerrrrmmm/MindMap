@@ -9,7 +9,7 @@ import 'package:mind_map/features/onboarding/widgets/main_info_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/painter/curved_painter_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/top_info_bar_widget.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
-import 'package:mind_map/navigation/app_router.dart';
+import 'package:mind_map/navigation/app_routes.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -303,6 +303,7 @@ class _ThirdOnboardingLayerState extends State<_ThirdOnboardingLayer> {
           right: 0,
           child: SizedBox(
             height: 400,
+
             ///TODO: Also need to save this value to firebase
             child: CurveSlider(
               onChanged: (value) {

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mind_map/features/auth/cubit/user_cubit/user_cubit.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
-import 'package:mind_map/navigation/app_router.dart';
+import 'package:mind_map/navigation/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

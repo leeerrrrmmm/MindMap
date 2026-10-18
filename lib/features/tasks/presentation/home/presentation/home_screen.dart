@@ -11,7 +11,7 @@ import 'package:mind_map/features/tasks/presentation/home/widgets/down_block_con
 import 'package:mind_map/features/tasks/presentation/home/widgets/mind_map_bloc.dart';
 import 'package:mind_map/features/tasks/presentation/home/widgets/quick_thougt_container_widget.dart';
 import 'package:mind_map/features/tasks/presentation/home/widgets/top_right_btn_widget.dart';
-import 'package:mind_map/navigation/app_router.dart';
+import 'package:mind_map/navigation/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -96,7 +96,6 @@ class _MainInfoWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        /// QUICK THOUGHT TEXT
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
@@ -108,17 +107,12 @@ class _MainInfoWidget extends StatelessWidget {
             ),
           ),
         ),
-
-        /// QUICK THOUGHT CONTAINER
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: QuickThoughtContainerWidget(),
         ),
-
-        /// YOUR TASKS
         Column(
           children: [
-            /// TEXT + SEE ALL
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
@@ -147,14 +141,11 @@ class _MainInfoWidget extends StatelessWidget {
                 ),
               ),
             ),
-
-            ///  TASKS LIST
             BlocConsumer<TaskCubit, TaskState>(
               listener: (context, state) {
                 if (state is TaskLoaded) {
                   log('Task Loaded');
                 }
-
                 if (state is TaskError) {
                   ScaffoldMessenger.of(
                     context,
@@ -166,10 +157,8 @@ class _MainInfoWidget extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (state is TaskLoaded) {
-                  log('Task Loaded: ${state.tasks.length}');
                   final tasks = state.tasks;
-                  final isTasksEmpty = tasks.isEmpty;
-                  if (isTasksEmpty) {
+                  if (tasks.isEmpty) {
                     return Center(
                       child: Text(
                         'No tasks found',
@@ -181,6 +170,7 @@ class _MainInfoWidget extends StatelessWidget {
                       ),
                     );
                   }
+
                   final topTasks = topList(tasks);
                   final bottomTasks = bottomList(tasks);
 
@@ -196,17 +186,12 @@ class _MainInfoWidget extends StatelessWidget {
                                   padding: const EdgeInsets.only(left: 10),
                                   itemCount: tasks.length,
                                   itemBuilder: (context, index) {
-                                    return _TaskCard(
-                                      task: tasks[index],
-                                      context: context,
-                                    );
+                                    return _TaskCard(task: tasks[index]);
                                   },
                                 ),
                               ),
                             )
-                          :
-                            /// 🔼 TOP AND BOTTOMROW
-                            Padding(
+                          : Padding(
                               padding: const EdgeInsets.only(bottom: 18.0),
                               child: _TwoTasksListViewWidget(
                                 topTasks: topTasks,
@@ -233,8 +218,6 @@ class _MainInfoWidget extends StatelessWidget {
             ),
           ],
         ),
-
-        ///BLOCK FOR YOU
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
@@ -308,13 +291,11 @@ class _TwoTasksListViewWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10),
             itemCount: topTasks.length,
             itemBuilder: (context, index) {
-              return _TaskCard(task: topTasks[index], context: context);
+              return _TaskCard(task: topTasks[index]);
             },
           ),
         ),
         const SizedBox(height: 10),
-
-        /// 🔽 BOTTOM ROW
         SizedBox(
           height: 68,
           child: ListView.builder(
@@ -322,7 +303,7 @@ class _TwoTasksListViewWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10),
             itemCount: bottomTasks.length,
             itemBuilder: (context, index) {
-              return _TaskCard(task: bottomTasks[index], context: context);
+              return _TaskCard(task: bottomTasks[index]);
             },
           ),
         ),
@@ -333,9 +314,8 @@ class _TwoTasksListViewWidget extends StatelessWidget {
 
 class _TaskCard extends StatelessWidget {
   final TaskEntity task;
-  final BuildContext context;
 
-  const _TaskCard({required this.task, required this.context});
+  const _TaskCard({required this.task});
 
   Color getContrastColor(Color color) {
     final luminance = color.computeLuminance();
@@ -351,13 +331,16 @@ class _TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final color = sphereColor.color;
+    final textColor = getContrastColor(color);
+
     return Container(
       margin: const EdgeInsets.only(right: 10),
       padding: const EdgeInsets.symmetric(horizontal: 10),
       width: 175,
       height: 70,
       decoration: BoxDecoration(
-        color: sphereColor.color,
+        color: color,
         borderRadius: BorderRadius.circular(22),
       ),
       child: Column(
@@ -369,15 +352,17 @@ class _TaskCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: getContrastColor(sphereColor.color),
+              color: textColor,
             ),
           ),
           Text(
             task.title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
-              color: getContrastColor(sphereColor.color),
+              color: textColor,
             ),
           ),
         ],
@@ -396,7 +381,6 @@ class _TopWidget extends StatelessWidget {
         if (state is UserLoaded) {
           final user = state.user;
           final fName = user.firstName;
-          // final lName = user.lastName?.isEmpty ?? true ? '' : user.lastName;
           return Align(
             alignment: Alignment.topCenter,
             child: Container(
@@ -420,17 +404,14 @@ class _TopWidget extends StatelessWidget {
                       backgroundColor: Color(0xFFAD3743).withValues(alpha: 0.7),
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.fromLTRB(26.0, 40.0, 20.0, 0.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ///LEFT COLUMN
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ///LOGO AND TITLE
                             Row(
                               spacing: 10,
                               children: [
@@ -444,8 +425,6 @@ class _TopWidget extends StatelessWidget {
                                 ),
                               ],
                             ),
-
-                            ///USER INFO
                             Padding(
                               padding: const EdgeInsets.only(top: 30.0),
                               child: RichText(
@@ -475,21 +454,15 @@ class _TopWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-
-                        ///RIGHT COLUMN
                         Column(
                           spacing: 20,
                           children: [
                             TopRightBtnWidget(
-                              onTap: () {
-                                ///TODO: Implement notification logic
-                              },
+                              onTap: () {},
                               icon: Icons.notifications_outlined,
                             ),
                             TopRightBtnWidget(
-                              onTap: () {
-                                ///TODO: Implement edit logic
-                              },
+                              onTap: () {},
                               icon: Icons.edit_outlined,
                             ),
                           ],
