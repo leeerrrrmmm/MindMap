@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mind_map/navigation/app_router.dart';
+import 'package:mind_map/features/auth/cubit/user_cubit/user_cubit.dart';
 import 'package:mind_map/features/splash/widgets/shadow_widget.dart';
+import 'package:mind_map/navigation/app_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,23 +15,41 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool isfirstSplash = false;
+
+  Future<void> _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 2)); // опционально
+
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (!mounted) return;
+
+    if (user != null) {
+      // Загружаем профиль
+      context.read<UserCubit>().loadUser(uid: user.uid);
+      context.go(AppRoutes.main);
+    } else {
+      context.go(AppRoutes.onboarding); // или sign-in
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        isfirstSplash = true;
-      });
-    }).then(
-      (value) => {
-        Future.delayed(const Duration(seconds: 4), () {
-          if (!mounted) {
-            return;
-          }
-          context.go(AppRoutes.onboarding);
-        }),
-      },
-    );
+    _checkAuth();
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   setState(() {
+    //     isfirstSplash = true;
+    //   });
+    // }).then(
+    //   (value) => {
+    //     Future.delayed(const Duration(seconds: 4), () {
+    //       if (!mounted) {
+    //         return;
+    //       }
+    //       context.go(AppRoutes.onboarding);
+    //     }),
+    //   },
+    // );
   }
 
   @override

@@ -232,6 +232,7 @@ class _SecondOnboardingLayerState extends State<_SecondOnboardingLayer> {
                       const SizedBox(height: 8),
 
                       /// INPUT
+                      /// TODO: Add Validation + we need to add our one goal at this step to firebase
                       TextFieldWidget(
                         userController: _userOwnOneGoalController,
                       ),
@@ -302,6 +303,7 @@ class _ThirdOnboardingLayerState extends State<_ThirdOnboardingLayer> {
           right: 0,
           child: SizedBox(
             height: 400,
+            ///TODO: Also need to save this value to firebase
             child: CurveSlider(
               onChanged: (value) {
                 log('value: $value');
@@ -339,14 +341,14 @@ class _ThirdOnboardingLayerState extends State<_ThirdOnboardingLayer> {
         ),
 
         Positioned(
-          top: 10,
+          top: 0,
           right: 0,
           left: 0,
           child: TopInfoBarWidget(currentLayerIndex: widget.currentLayerIndex),
         ),
 
         Positioned(
-          top: 60,
+          top: 70,
           right: 0,
           left: 0,
           child: Column(

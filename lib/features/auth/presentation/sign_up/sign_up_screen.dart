@@ -6,7 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mind_map/components/login_with_another_way_widget.dart';
 import 'package:mind_map/components/sign_btn_widget.dart';
 import 'package:mind_map/components/text_field_widget.dart';
-import 'package:mind_map/features/auth/cubit/cubit/auth_cubit.dart';
+import 'package:mind_map/features/auth/cubit/auth_cubit/auth_cubit.dart';
+import 'package:mind_map/features/auth/cubit/user_cubit/user_cubit.dart';
 import 'package:mind_map/navigation/app_router.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -28,14 +29,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state is AuthAuthenticated) {
+          if (state is AuthSuccess) {
+            context.read<UserCubit>().loadUser(uid: state.user.uid);
             context.go(AppRoutes.main);
           }
 
-          if (state is AuthError) {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+          if (state is AuthFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  state.message,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onError,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            );
           }
         },
         builder: (context, state) {
@@ -46,6 +56,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Stack(
               children: [
                 Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
                   child: Image.asset(
                     'assets/images/log_reg_back.png',
                     fit: BoxFit.cover,
@@ -156,7 +169,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 context.read<AuthCubit>().signUp(
                                   email: email,
                                   password: password,
-                                  confirmPassword: confirm,
                                   goal: 'test gola',
                                   mood: 222,
                                 );

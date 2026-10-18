@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mind_map/features/auth/cubit/user_cubit/user_cubit.dart';
 import 'package:mind_map/features/tasks/cubit/cubit/task_cubit.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
 import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
@@ -30,17 +31,42 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            _TopWidget(),
+      body: BlocBuilder<UserCubit, UserState>(
+        builder: (context, userState) {
+          return BlocBuilder<TaskCubit, TaskState>(
+            builder: (context, taskState) {
+              final isLoading =
+                  userState is UserLoading ||
+                  userState is UserInitial ||
+                  taskState is TaskLoading ||
+                  taskState is TaskInitial;
 
-            Padding(
-              padding: const EdgeInsets.only(top: 200),
-              child: _MainInfoWidget(),
-            ),
-          ],
-        ),
+              if (isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (userState is UserFailure) {
+                return Center(child: Text(userState.message));
+              }
+
+              if (taskState is TaskError) {
+                return Center(child: Text(taskState.message));
+              }
+
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const _TopWidget(),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 18),
+                      child: _MainInfoWidget(),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
@@ -96,7 +122,7 @@ class _MainInfoWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
-                height: 80,
+                height: 60,
                 child: Row(
                   children: [
                     Expanded(
@@ -122,7 +148,7 @@ class _MainInfoWidget extends StatelessWidget {
               ),
             ),
 
-            ///  LISTS
+            ///  TASKS LIST
             BlocConsumer<TaskCubit, TaskState>(
               listener: (context, state) {
                 if (state is TaskLoaded) {
@@ -142,6 +168,19 @@ class _MainInfoWidget extends StatelessWidget {
                 if (state is TaskLoaded) {
                   log('Task Loaded: ${state.tasks.length}');
                   final tasks = state.tasks;
+                  final isTasksEmpty = tasks.isEmpty;
+                  if (isTasksEmpty) {
+                    return Center(
+                      child: Text(
+                        'No tasks found',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    );
+                  }
                   final topTasks = topList(tasks);
                   final bottomTasks = bottomList(tasks);
 
@@ -204,7 +243,7 @@ class _MainInfoWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Block for you',
+                'Bloc for you',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -352,107 +391,122 @@ class _TopWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Container(
-        clipBehavior: Clip.hardEdge,
-        width: double.infinity,
-        height: 184,
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-        ),
-        child: Stack(
-          children: [
-            Positioned(
-              top: 10,
-              left: -50,
-              child: CircleAvatar(
-                radius: 140,
-                backgroundColor: Color(0xFFAD3743).withValues(alpha: 0.7),
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        if (state is UserLoaded) {
+          final user = state.user;
+          final fName = user.firstName;
+          // final lName = user.lastName?.isEmpty ?? true ? '' : user.lastName;
+          return Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              clipBehavior: Clip.hardEdge,
+              width: double.infinity,
+              height: 154,
+              decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
               ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.fromLTRB(26.0, 50.0, 20.0, 0.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Stack(
                 children: [
-                  ///LEFT COLUMN
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ///LOGO AND TITLE
-                      Row(
-                        spacing: 10,
-                        children: [
-                          Image.asset('assets/images/logo.png', scale: 3),
-                          Text(
-                            'MindMap24',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      ///USER INFO
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30.0),
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            children: [
-                              TextSpan(text: 'Hi, '),
-                              TextSpan(
-                                text: 'John Doe',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              TextSpan(
-                                text: '\nWelcome to your mind map!',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                  Positioned(
+                    top: 0,
+                    left: -50,
+                    child: CircleAvatar(
+                      radius: 140,
+                      backgroundColor: Color(0xFFAD3743).withValues(alpha: 0.7),
+                    ),
                   ),
 
-                  ///RIGHT COLUMN
-                  Column(
-                    spacing: 20,
-                    children: [
-                      TopRightBtnWidget(
-                        onTap: () {
-                          ///TODO: Implement notification logic
-                        },
-                        icon: Icons.notifications_outlined,
-                      ),
-                      TopRightBtnWidget(
-                        onTap: () {
-                          ///TODO: Implement edit logic
-                        },
-                        icon: Icons.edit_outlined,
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(26.0, 40.0, 20.0, 0.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ///LEFT COLUMN
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ///LOGO AND TITLE
+                            Row(
+                              spacing: 10,
+                              children: [
+                                Image.asset('assets/images/logo.png', scale: 3),
+                                Text(
+                                  'MindMap24',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            ///USER INFO
+                            Padding(
+                              padding: const EdgeInsets.only(top: 30.0),
+                              child: RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  children: [
+                                    TextSpan(text: 'Hi, '),
+                                    TextSpan(
+                                      text: '$fName',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '\nWelcome to your mind map!',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        ///RIGHT COLUMN
+                        Column(
+                          spacing: 20,
+                          children: [
+                            TopRightBtnWidget(
+                              onTap: () {
+                                ///TODO: Implement notification logic
+                              },
+                              icon: Icons.notifications_outlined,
+                            ),
+                            TopRightBtnWidget(
+                              onTap: () {
+                                ///TODO: Implement edit logic
+                              },
+                              icon: Icons.edit_outlined,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          );
+        }
+        if (state is UserFailure) {
+          return Center(child: Text(state.message));
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }

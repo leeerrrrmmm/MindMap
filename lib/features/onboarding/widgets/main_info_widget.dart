@@ -28,7 +28,7 @@ class MainInfoWidget extends StatelessWidget {
               children: [
                 const TextSpan(text: 'Do you haves'),
                 TextSpan(
-                  text: 'a lot of\nthoughts',
+                  text: '\ta lot of\nthoughts\t',
                   style: TextStyle(
                     color: Theme.of(context).scaffoldBackgroundColor,
                   ),

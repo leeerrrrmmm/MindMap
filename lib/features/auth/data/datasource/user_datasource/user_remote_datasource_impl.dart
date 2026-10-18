@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mind_map/features/auth/data/datasource/user_remote_datasource.dart';
+import 'package:mind_map/features/auth/data/datasource/user_datasource/user_remote_datasource.dart';
 import 'package:mind_map/features/auth/data/model/user_model.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -15,8 +15,11 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<UserModel> getCurrentUser({required String uid}) async {
-    final user = await _firestore.collection('users').doc(uid).get();
-    return UserModel.fromJson(user.data()!);
+    final doc = await _firestore.collection('users').doc(uid).get();
+    if (!doc.exists || doc.data() == null) {
+      throw Exception('User not found');
+    }
+    return UserModel.fromJson(doc.data()!);
   }
 
   @override

@@ -10,7 +10,7 @@ class MindMapBloc extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 341,
+        width: double.infinity,
         height: 158,
         decoration: BoxDecoration(
           gradient: LinearGradient(

@@ -137,8 +137,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
                               if (taskTitle.isEmpty || taskDeadline == null) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Please fill all fields'),
+                                  SnackBar(
+                                    content: Text(
+                                      'Please fill all fields',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(fontSize: 12),
+                                    ),
                                   ),
                                 );
                                 return;
@@ -299,7 +305,7 @@ class _SelectDeadLine extends StatelessWidget {
             height: 60,
             width: double.infinity,
             decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.3),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: Theme.of(context).colorScheme.secondary,
@@ -317,7 +323,7 @@ class _SelectDeadLine extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Theme.of(
                       context,
-                    ).colorScheme.secondary.withOpacity(0.7),
+                    ).colorScheme.secondary.withValues(alpha: 0.7),
                   ),
                 ),
               ],
