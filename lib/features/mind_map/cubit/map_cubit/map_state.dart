@@ -11,13 +11,22 @@ final class MapInitial extends MapState {}
 
 final class MapLoading extends MapState {}
 
-final class MapLoaded extends MapState {
+final class MapsLoaded extends MapState {
   final List<MapEntity> maps;
 
-  const MapLoaded({required this.maps});
+  const MapsLoaded({required this.maps});
 
   @override
   List<Object> get props => [maps];
+}
+
+final class MapLoaded extends MapState {
+  final MapEntity mapById;
+
+  const MapLoaded({required this.mapById});
+
+  @override
+  List<Object> get props => [mapById];
 }
 
 final class MapError extends MapState {

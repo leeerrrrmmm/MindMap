@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mind_map/components/text_field_widget.dart';
+import 'package:mind_map/core/components/text_field_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/arrow_button_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/goals_example_widget.dart';
 import 'package:mind_map/features/onboarding/widgets/main_info_widget.dart';

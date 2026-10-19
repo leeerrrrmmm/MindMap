@@ -5,9 +5,11 @@ import 'package:mind_map/features/appearance/presentation/appearance_screen.dart
 import 'package:mind_map/features/auth/presentation/sign_in/sign_in_screen.dart';
 import 'package:mind_map/features/auth/presentation/sign_up/sign_up_screen.dart';
 import 'package:mind_map/features/forgot_password/presentation/forgot_password_screen.dart';
+import 'package:mind_map/features/mind_map/presentation/add_mind_map/add_mind_map_screen.dart';
+import 'package:mind_map/features/mind_map/presentation/all_mind_maps/all_mind_maps_screen.dart';
+import 'package:mind_map/features/mind_map/presentation/mind_map/mind_map_screen.dart';
 import 'package:mind_map/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:mind_map/features/splash/presentation/splash_screen.dart';
-import 'package:mind_map/features/tasks/presentation/add_mind_map/add_mind_map_screen.dart';
 import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
 import 'package:mind_map/features/tasks/presentation/idea/presentation/ideas_task_screen.dart';
 import 'package:mind_map/features/tasks/presentation/private/presentation/private_task_screen.dart';
@@ -76,6 +78,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.addTask,
       builder: (context, state) => const AddTaskScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.allMindMaps,
+      builder: (context, state) => const AllMindMapsScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.mindMap,
+      builder: (context, state) => const MindMapScreen(),
     ),
   ],
   errorBuilder: (context, state) =>

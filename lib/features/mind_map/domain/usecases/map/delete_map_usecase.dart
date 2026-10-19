@@ -1,4 +1,4 @@
-import 'package:mind_map/features/tasks/domain/repo/map_repo.dart';
+import 'package:mind_map/features/mind_map/domain/repo/map_repo.dart';
 
 class DeleteMapUsecase {
   final MapRepo _mapRepo;

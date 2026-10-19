@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mind_map/di/di.dart';
 import 'package:mind_map/features/auth/cubit/auth_cubit/auth_cubit.dart';
 import 'package:mind_map/features/auth/cubit/user_cubit/user_cubit.dart';
-import 'package:mind_map/features/tasks/cubit/map_cubit/map_cubit.dart';
+import 'package:mind_map/features/mind_map/cubit/map_cubit/map_cubit.dart';
 import 'package:mind_map/features/tasks/cubit/task_cubit/task_cubit.dart';
 import 'package:mind_map/navigation/app_router.dart';
 import 'package:mind_map/theme/app_theme.dart';

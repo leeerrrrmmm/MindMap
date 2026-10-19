@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mind_map/features/mind_map/presentation/all_mind_maps/all_mind_maps_screen.dart';
 import 'package:mind_map/features/settings/settings_screen.dart';
 import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
 import 'package:mind_map/features/tasks/presentation/all_tasks_screen/all_tasks_screen.dart';
@@ -18,7 +19,7 @@ class _NavigationState extends State<Navigation> {
   // Список страниц
   final List<Widget> _pages = [
     const HomeScreen(),
-    const Scaffold(body: Center(child: Text(' Map Screen '))),
+    const AllMindMapsScreen(),
     const AddTaskScreen(),
     const AllTasksScreen(),
     const SettingsScreen(),

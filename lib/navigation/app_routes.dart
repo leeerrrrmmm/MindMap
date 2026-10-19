@@ -12,5 +12,7 @@ abstract final class AppRoutes {
   static const private = '/private';
   static const ideas = '/ideas';
   static const addMindMap = '/add-mind-map';
+  static const mindMap = '/mind-map';
+  static const allMindMaps = '/all-mind-maps';
   static const addTask = '/add-task';
 }

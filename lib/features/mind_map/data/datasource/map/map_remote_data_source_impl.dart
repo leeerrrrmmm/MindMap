@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mind_map/features/tasks/data/datasource/map/map_remote_data_source.dart';
-import 'package:mind_map/features/tasks/data/model/map_model/map_model.dart';
+import 'package:mind_map/features/mind_map/data/datasource/map/map_remote_data_source.dart';
+import 'package:mind_map/features/mind_map/data/model/map_model/map_model.dart';
 
 class MapRemoteDataSourceImpl implements MapRemoteDataSource {
   final FirebaseFirestore _firestore;
@@ -43,7 +43,37 @@ class MapRemoteDataSourceImpl implements MapRemoteDataSource {
         .collection('maps')
         .get();
 
-    return maps.docs.map((doc) => MapModel.fromJson(doc.data())).toList();
+    // return maps.docs.map((doc) => MapModel.fromJson(doc.data())).toList();
+    return maps.docs.map((doc) {
+      final data = doc.data();
+
+      data['id'] = doc.id;
+
+      return MapModel.fromJson(data);
+    }).toList();
+  }
+
+  @override
+  Future<MapModel> fetchMapById(String mapId) async {
+    final curUser = _firebaseAuth.currentUser?.uid;
+
+    if (curUser == null) {
+      throw Exception('Current user not found');
+    }
+
+    final snapshot = await _firestore
+        .collection('users')
+        .doc(curUser)
+        .collection('maps')
+        .doc(mapId)
+        .get();
+
+    final data = snapshot.data();
+    if (!snapshot.exists || data == null) {
+      throw Exception('Map not found: $mapId');
+    }
+
+    return MapModel.fromJson({...data, 'id': snapshot.id});
   }
 
   @override

@@ -1,7 +1,7 @@
-import 'package:mind_map/features/tasks/data/datasource/map/map_remote_data_source.dart';
-import 'package:mind_map/features/tasks/data/model/map_model/map_model.dart';
-import 'package:mind_map/features/tasks/domain/entity/map_entity.dart';
-import 'package:mind_map/features/tasks/domain/repo/map_repo.dart';
+import 'package:mind_map/features/mind_map/data/datasource/map/map_remote_data_source.dart';
+import 'package:mind_map/features/mind_map/data/model/map_model/map_model.dart';
+import 'package:mind_map/features/mind_map/domain/entity/map_entity.dart';
+import 'package:mind_map/features/mind_map/domain/repo/map_repo.dart';
 
 class MapRepositoryImpl implements MapRepo {
   final MapRemoteDataSource _mapRemoteDataSource;
@@ -19,6 +19,12 @@ class MapRepositoryImpl implements MapRepo {
   Future<List<MapEntity>> fetchMaps() async {
     final models = await _mapRemoteDataSource.fetchMaps();
     return models.map((model) => MapModel.fromEntity(model)).toList();
+  }
+
+  @override
+  Future<MapEntity> fetchMapById(String mapId) async {
+    final mapById = await _mapRemoteDataSource.fetchMapById(mapId);
+    return mapById;
   }
 
   @override

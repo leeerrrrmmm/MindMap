@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mind_map/features/tasks/cubit/task_cubit/task_cubit.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
-import 'package:mind_map/features/tasks/presentation/private/extension/sphere_grouping_extension.dart';
+import 'package:mind_map/core/extension/sphere_grouping_extension.dart';
 
 class AllTasksScreen extends StatelessWidget {
   const AllTasksScreen({super.key});

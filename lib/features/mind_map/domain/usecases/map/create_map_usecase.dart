@@ -1,5 +1,5 @@
-import 'package:mind_map/features/tasks/domain/entity/map_entity.dart';
-import 'package:mind_map/features/tasks/domain/repo/map_repo.dart';
+import 'package:mind_map/features/mind_map/domain/entity/map_entity.dart';
+import 'package:mind_map/features/mind_map/domain/repo/map_repo.dart';
 
 class CreateMapUsecase {
   final MapRepo _mapRepo;

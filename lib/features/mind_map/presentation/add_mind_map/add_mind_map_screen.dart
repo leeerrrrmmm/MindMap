@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mind_map/features/tasks/cubit/map_cubit/map_cubit.dart';
-import 'package:mind_map/features/tasks/data/model/map_model/map_model.dart';
+import 'package:mind_map/features/mind_map/cubit/map_cubit/map_cubit.dart';
+import 'package:mind_map/features/mind_map/data/model/map_model/map_model.dart';
 import 'package:mind_map/features/tasks/domain/entity/task_entity.dart';
 import 'package:mind_map/features/tasks/presentation/add_task/presentation/add_task_screen.dart';
 import 'package:mind_map/features/tasks/presentation/home/widgets/select_sphere_widget.dart';
@@ -111,7 +111,7 @@ class _AddMindMapScreenState extends State<AddMindMapScreen> {
                 padding: const EdgeInsets.only(bottom: 18.0),
                 child: BlocConsumer<MapCubit, MapState>(
                   listener: (context, state) {
-                    if (state is MapLoaded) {
+                    if (state is MapsLoaded) {
                       context.go(AppRoutes.main);
                     }
 
